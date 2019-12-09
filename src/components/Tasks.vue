@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     getTasks() {
-      const path = 'http://localhost:4000/tasks';
+      const path = 'https://tasksnodeapp.herokuapp.com/tasks';
       axios.get(path).then((res) => {
         this.tasks = res.data;
         console.log(res.data.tasks);
