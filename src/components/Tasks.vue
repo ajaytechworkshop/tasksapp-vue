@@ -9,20 +9,24 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th scope="col">Date</th>
+              <!--th scope="col">Date</th-->
               <th scope="col">Task</th>
               <th scope="col">Description</th>
               <th scope="col">Done?</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Develop</td>
-              <td>Keep Developing</td>
-              <td>Developing</td>
+            <tr v-for="(task, index) in tasks" :key=index>
+              <!--td>{{task.date}}</td-->
+              <td>{{task.name}}</td>
+              <td>{{task.description}}</td>
+              <td>
+                <span v-if="task.done">Yes</span>
+                <span v-else>No</span>
+              </td>
               <td>
                 <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-info btn-sm">Edit</button>
+                  <button type="button" class="btn btn-warning btn-sm">Edit</button>
                   <button type="button" class="btn btn-danger btn-sm">Remove</button>
                 </div>
               </td>
@@ -35,8 +39,28 @@
 </template>
 
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+  data() {
+    return {
+      tasks: [],
+    };
+  },
+  methods: {
+    getTasks() {
+      const path = 'http://localhost:4000/tasks';
+      axios.get(path).then((res) => {
+        this.tasks = res.data;
+        console.log(res.data.tasks);
+      }).catch((e) => {
+        console.error(e);
+      });
+    },
+  },
+  created() {
+    this.getTasks();
+  },
 };
 </script>
 
