@@ -13,7 +13,7 @@
               <!--th scope="col">Date</th-->
               <th scope="col">Task</th>
               <th scope="col">Description</th>
-              <th scope="col">Done</th>
+              <th scope="col">Status</th>
               <th></th>
             </tr>
           </thead>
@@ -22,10 +22,7 @@
               <!--td>{{task.date}}</td-->
               <td>{{task.name}}</td>
               <td>{{task.description}}</td>
-              <td>
-                <span v-if="task.done">Yes</span>
-                <span v-else>No</span>
-              </td>
+              <td>{{task.status}}</td>
               <td>
                 <div class="btn-group" role="group">
                   <button type="button"
@@ -56,10 +53,11 @@
             required placeholder="Task Description">
           </b-form-input>
         </b-form-group>
-         <b-form-group id="form-done-group">
-          <b-form-checkbox-group v-model="addTask.done" id="form-checks">
-            <b-form-checkbox value="true">Done?</b-form-checkbox>
-          </b-form-checkbox-group>
+         <b-form-group id="form-status-group">
+          <b-form-input id="form-status-input"
+            type="text" v-model="addTask.status"
+            required placeholder="Task Status">
+          </b-form-input>
         </b-form-group>
         <b-button type="submit" variant="primary">Submit</b-button>
         <b-button type="reset" variant="danger">Reset</b-button>
@@ -90,10 +88,13 @@
                       placeholder="Task Description">
         </b-form-input>
       </b-form-group>
-    <b-form-group id="form-done-edit-group">
-      <b-form-checkbox-group v-model="editTask.done" id="form-checks">
-        <b-form-checkbox value="true">Done?</b-form-checkbox>
-      </b-form-checkbox-group>
+    <b-form-group id="form-status-edit-group">
+       <b-form-input id="form-status-edit-input"
+                      type="text"
+                      v-model="editTask.status"
+                      required
+                      placeholder="Task Status">
+        </b-form-input>
     </b-form-group>
     <b-button-group>
       <b-button type="submit" variant="primary">Update</b-button>
@@ -118,12 +119,12 @@ export default {
       addTask: {
         name: '',
         description: '',
-        done: [],
+        status: '',
       },
       editTask: {
         name: '',
         description: '',
-        done: [],
+        status: '',
       },
       message: '',
       showMessage: false,
@@ -156,20 +157,18 @@ export default {
     initForm() {
       this.addTask.name = '';
       this.addTask.description = '';
-      this.addTask.done = [];
+      this.addTask.status = '';
       this.editTask.name = '';
       this.editTask.description = '';
-      this.editTask.done = [];
+      this.editTask.status = '';
     },
     onSubmit(evt) {
       evt.preventDefault();
       this.$refs.addTaskModal.hide();
-      let done = false;
-      if (this.addTask.done[0]) done = true;
       const payload = {
         name: this.addTask.name,
         description: this.addTask.description,
-        done,
+        status: this.addTask.status,
       };
       this.addTaskfn(payload);
       this.initForm();
@@ -185,12 +184,10 @@ export default {
     onSubmitUpdate(evt) {
       evt.preventDefault();
       this.$refs.editTaskModal.hide();
-      let done = false;
-      if (this.editTask.done[0]) done = true;
       const payload = {
         name: this.editTask.name,
         description: this.editTask.description,
-        done,
+        status: this.editTask.status,
       };
       this.updateTask(payload, this.editTask._id);
     },
