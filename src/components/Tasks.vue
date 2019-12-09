@@ -35,6 +35,9 @@
         </table>
       </div>
     </div>
+    <b-modal ref="addTaskModal">
+
+    </b-modal>
   </div>
 </template>
 
