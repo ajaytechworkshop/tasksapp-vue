@@ -53,7 +53,8 @@
             required placeholder="Task Description">
           </b-form-input>
         </b-form-group>
-         <b-form-group id="form-status-group">
+         <b-form-group id="form-status-group" label="Status:"
+         label-for="form-status-input">
           <b-form-input id="form-status-input"
             type="text" v-model="addTask.status"
             required placeholder="Task Status">
@@ -88,7 +89,9 @@
                       placeholder="Task Description">
         </b-form-input>
       </b-form-group>
-    <b-form-group id="form-status-edit-group">
+    <b-form-group id="form-status-edit-group"
+                  label="Status:"
+                  label-for="form-status-edit-input">
        <b-form-input id="form-status-edit-input"
                       type="text"
                       v-model="editTask.status"
